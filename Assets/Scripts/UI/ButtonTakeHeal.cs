@@ -2,15 +2,11 @@ using UnityEngine;
 
 public class ButtonTakeHeal : ButtonAbstract
 {
-    [SerializeField] private float _heal = 20;
+    [SerializeField] private Health _health;
+    [SerializeField] private float _heal = 20f;
 
-    private void OnEnable()
+    public override void ChangeSlider()
     {
-        Button.onClick.AddListener(RestoreHeal);
-    }
-
-    public void RestoreHeal()
-    {
-        Health.RestoreHeal(_heal);
+        _health.RestoreHeal(_heal);
     }
 }

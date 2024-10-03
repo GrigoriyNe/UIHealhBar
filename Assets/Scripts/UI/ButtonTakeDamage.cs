@@ -2,15 +2,11 @@ using UnityEngine;
 
 public class ButtonTakeDamage : ButtonAbstract
 {
-    [SerializeField] private float _damage = 1;
+    [SerializeField] private Health _health;
+    [SerializeField] private float _damage = 10;
 
-    private void OnEnable()
+    public override void ChangeSlider()
     {
-        Button.onClick.AddListener(TakeDamage);
-    }
-
-    public void TakeDamage()
-    {
-        Health.TakeDamage(_damage);
+        _health.TakeDamage(_damage);
     }
 }

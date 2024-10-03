@@ -1,7 +1,7 @@
 public class HealthBarFast : HealthBarAbstract 
 {
-    private void Update()
+    public override void ChangeSlider(float healthValue)
     {
-        Slider.value = HealthValue;
+        Slider.value = healthValue;
     }
 }

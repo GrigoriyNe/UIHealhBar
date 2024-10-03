@@ -1,12 +1,30 @@
+using System.Collections;
 using UnityEngine;
 
 public class HealthBarSmooth : HealthBarAbstract
 {
-    [SerializeField, Min(0.01f)] private float _smoothValue = 0.5f;
+    [SerializeField, Min(10f)] private float _smoothValue = 50f;
 
-    private void Update()
+    private Coroutine _coroutine;
+    private float _currentValue;
+
+    public override void ChangeSlider(float healthValue)
     {
-        float currentValue = Slider.value;
-        Slider.value = Mathf.MoveTowards(currentValue, HealthValue, _smoothValue);
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
+        
+        _currentValue = Slider.value;
+        _coroutine = StartCoroutine(ChangeSliderSmooth(healthValue));
+    }
+
+    private IEnumerator ChangeSliderSmooth(float healthValue)
+    {
+        while (_currentValue != healthValue)
+        {
+            Slider.value = Mathf.MoveTowards(_currentValue, healthValue, _smoothValue * Time.deltaTime);
+            _currentValue = Slider.value;
+
+            yield return null;
+        }
     }
 }

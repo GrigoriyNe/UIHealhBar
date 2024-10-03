@@ -3,32 +3,30 @@ using UnityEngine.UI;
 
 public abstract class HealthBarAbstract : MonoBehaviour
 {
-    [SerializeField] private Health Health;
+    [SerializeField] private Health _health;
 
-    public Slider Slider;
-    public float HealthValue;
+    public Slider Slider { get; private set; }
+
+    private void Awake()
+    {
+        Slider = GetComponent<Slider>();
+        Slider.maxValue = _health.Max;
+        Slider.value = Slider.maxValue;
+    }
 
     private void OnEnable()
     {
-        Slider = GetComponent<Slider>();
-        Slider.maxValue = Health.Max;
-        HealthValue = Health.Max;
-        Slider.value = HealthValue;
-        Health.Changed += GetHealthValue;
+        _health.Changed += ChandgedHealthValue;
     }
 
     private void OnDisable()
     {
-        Health.Changed -= GetHealthValue;
+        _health.Changed -= ChandgedHealthValue;
     }
+    public abstract void ChangeSlider(float healthValue);
 
-    private void GetHealthValue(float healthValue)
+    private void ChandgedHealthValue(float healthValue)
     {
-        HealthValue = healthValue;
-
-        if (HealthValue <= 0)
-        {
-            gameObject.SetActive(false);
-        }
+        ChangeSlider(healthValue);
     }
 }
