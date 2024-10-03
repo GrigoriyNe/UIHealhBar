@@ -1,9 +1,11 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public abstract class HealthBarAbstract : MonoBehaviour
 {
     [SerializeField] private Health _health;
+    [SerializeField] private TMP_Text _text;
 
     public Slider Slider { get; private set; }
 
@@ -17,6 +19,7 @@ public abstract class HealthBarAbstract : MonoBehaviour
     private void OnEnable()
     {
         _health.Changed += ChandgedHealthValue;
+        _text.text = (_health.Max + "/" + _health.Max);
     }
 
     private void OnDisable()
@@ -27,6 +30,7 @@ public abstract class HealthBarAbstract : MonoBehaviour
 
     private void ChandgedHealthValue(float healthValue)
     {
+        _text.text = (healthValue.ToString() + "/" + _health.Max);
         ChangeSlider(healthValue);
     }
 }
