@@ -5,11 +5,10 @@ public class Health : MonoBehaviour
 {
     private float _min = 0;
 
+    public event UnityAction<float> Changed;
+
     public float Max { get; private set; } = 100;
     public float Value { get; private set; }
-
-
-    public event UnityAction<float> Changed;
 
     private void Awake()
     {
@@ -18,21 +17,13 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        Value -= Mathf.Clamp(damage, _min, Max);
+        Value = Mathf.Clamp(Value - damage, _min, Max);
         Changed?.Invoke(Value);
     }
 
     public void RestoreHeal(float heal)
     {
-        if (Value + heal > Max)
-        {
-            Value = Max;
-        }
-        else
-        {
-            Value += Mathf.Clamp(heal, _min, Max);
-        }
-
+        Value = Mathf.Clamp(Value + heal, _min, Max);
         Changed?.Invoke(Value);
     }
 }

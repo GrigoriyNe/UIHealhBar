@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class HealthBarSmooth : HealthBarAbstract
 {
-    private float _smoothValue = 0.5f;
+    [SerializeField, Min(0.01f)] private float _smoothValue = 0.5f;
 
     private void Update()
     {

@@ -1,4 +1,3 @@
-
 public class HealthBarFast : HealthBarAbstract 
 {
     private void Update()

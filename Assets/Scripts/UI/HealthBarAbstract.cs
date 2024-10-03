@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public abstract class HealthBarAbstract : MonoBehaviour
 {
-    [SerializeField] public Health Health;
+    [SerializeField] private Health Health;
 
     public Slider Slider;
     public float HealthValue;
@@ -26,7 +26,7 @@ public abstract class HealthBarAbstract : MonoBehaviour
     {
         HealthValue = healthValue;
 
-        if (Slider.value <= 0)
+        if (HealthValue <= 0)
         {
             gameObject.SetActive(false);
         }
